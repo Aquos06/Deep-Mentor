@@ -1,3 +1,6 @@
+import cv2
+import numpy as np
+
 class PolygonDrawer:
     def __init__(self, image):
         self.image = image
@@ -48,7 +51,7 @@ def main():
     drawer = PolygonDrawer(image)
 
     # Call the draw_roi method
-    drawer.draw_roi()
-
+    coordinate = drawer.draw_roi()
+    print(coordinate)
 if __name__ == "__main__":
     main()
