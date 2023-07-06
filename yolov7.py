@@ -82,7 +82,7 @@ class detect():
                 self.person_coor.append(k)
 
 
-        return img1, np.asarray(self.pred) #xcenter, ycenter, width, height, conf, class
+        return img1, np.asarray(self.person_coor) #xcenter, ycenter, width, height, conf, class
     
 
 if __name__ == '__main__':

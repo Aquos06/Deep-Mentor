@@ -1,14 +1,17 @@
 from utility. drawroi import PolygonDrawer
 from utility.image import drawRoi
-from utility.pointTest import is_point_inside_polygon
+from utility.loiteringChecking import Loitering
 
 from yolov7 import detect
+from track import Trackker
 
 import cv2
 import numpy as np
 import threading
 import queue
+
 import time
+from datetime import datetime
 
 class VideoCaptureThread(threading.Thread):
     def __init__(self, camera_id, frame_queue):
@@ -23,7 +26,7 @@ class VideoCaptureThread(threading.Thread):
         while self.running:
             ret,frame = self.capture.read()
             if not ret:
-                print('video not found')
+                print('video ended')
                 break
             
             #remove previous frame
@@ -41,6 +44,9 @@ class VideoCaptureThread(threading.Thread):
 
 def main():
     yolov7 = detect()
+    loitering = Loitering()
+    OCTrack = Trackker()
+    
     filename = './video/raw_loitering.mp4'
     cap = cv2.VideoCapture(filename)
     _, frame = cap.read()
@@ -58,14 +64,27 @@ def main():
     for thread in threads:
         thread.start()
         
+    time_start = datetime.now()
+        
     while True:
         frame = the_queue.get()
         
-        frame, _ = yolov7.predict(frame)
+        frame, personCoor = yolov7.predict(frame)
+        personCoor = OCTrack.tracking(np.asarray(personCoor), frame)
+        
         frame = drawRoi(frame, np.asarray(roiCoordinate))
+        
+        timeNow, loiteringCoordinate = loitering.check(roiCoordinate,personCoor)
+        
+        if loiteringCoordinate:
+            differnce = timeNow - time_start
+            #TODO: make the json output
+            print(f"Trigger loitering at {differnce.total_seconds()} second")
+        
         cv2.imshow("loitering video", frame)
         if cv2.waitKey(1) == ord('q'):
             break
+        
         
     for thread in threads:
         thread.stop()
