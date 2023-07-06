@@ -2,6 +2,8 @@ from utility. drawroi import PolygonDrawer
 from utility.image import drawRoi
 from utility.pointTest import is_point_inside_polygon
 
+from yolov7 import detect
+
 import cv2
 import numpy as np
 import threading
@@ -38,6 +40,7 @@ class VideoCaptureThread(threading.Thread):
         self.join()
 
 def main():
+    yolov7 = detect()
     filename = './video/raw_loitering.mp4'
     cap = cv2.VideoCapture(filename)
     _, frame = cap.read()
@@ -58,6 +61,8 @@ def main():
     while True:
         frame = the_queue.get()
         
+        frame, _ = yolov7.predict(frame)
+        frame = drawRoi(frame, np.asarray(roiCoordinate))
         cv2.imshow("loitering video", frame)
         if cv2.waitKey(1) == ord('q'):
             break

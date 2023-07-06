@@ -16,7 +16,7 @@ class detect():
     def __init__(self):
         set_logging()
         self.device = select_device('0')
-        self.model = attempt_load('weights/fall_best.pt', map_location= self.device)
+        self.model = attempt_load('weights/yolov7.pt', map_location= self.device)
         self.model(torch.zeros(1, 3, 640, 640).to(self.device).type_as(next(self.model.parameters())))
         # self.model = TracedModel(self.model, self.device, 1280)
         self.model.half()
@@ -69,7 +69,7 @@ class detect():
 
         with torch.no_grad():
             self.pred = self.model(self.img, augment = False)[0]
-            self.pred = non_max_suppression(self.pred, 0.8,0.45,agnostic=True)
+            self.pred = non_max_suppression(self.pred, 0.45,0.45,agnostic=True)
 
         if self.pred:
             self.pred = self.pred[0]
@@ -78,7 +78,7 @@ class detect():
             self.person_coor = []
 
             for k in self.pred:
-                plot_one_box(k[:4], img1, label = "Falldown", color = (0,0,255), line_thickness = 1)
+                plot_one_box(k[:4], img1, label = self.names[int(k[-1])], color = self.colors[int(k[-1])], line_thickness = 1)
                 self.person_coor.append(k)
 
 
