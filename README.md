@@ -19,7 +19,7 @@ python3 main.py
 ```
 
 ## To do :white_check_mark:
-- [ ] Give 3 frame threshold
+- [X] Give 3 frame threshold
 - [ ] Change deleteId in Loitering class
 - [ ] Output the json
 - [ ] Give comments

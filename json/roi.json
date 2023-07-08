@@ -1,0 +1,52 @@
+{
+  "info": {
+    "description": "loitering"
+  },
+  "images": [
+    {
+      "id": 1,
+      "width": 1280,
+      "height": 720,
+      "filename": "./video/raw_loitering.mp4"
+    }
+  ],
+  "annotations": [
+    {
+      "id": 0,
+      "iscrowd": 0,
+      "image_id": 1,
+      "category_id": 1,
+      "segmentations": [
+        [
+          395,
+          319
+        ],
+        [
+          675,
+          99
+        ],
+        [
+          780,
+          371
+        ],
+        [
+          530,
+          443
+        ]
+      ],
+      "bbox": [
+        395,
+        99,
+        385,
+        344
+      ],
+      "area": 69990.0
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "alarmzone"
+    }
+  ]
+}

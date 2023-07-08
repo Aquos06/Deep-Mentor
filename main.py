@@ -1,6 +1,7 @@
 from utility. drawroi import PolygonDrawer
 from utility.image import drawRoi
 from utility.loiteringChecking import Loitering
+from utility.exportMetadata import COCOJSON
 
 from yolov7 import detect
 from track import Trackker
@@ -54,6 +55,9 @@ def main():
     cap.release()
     
     roiCoordinate = roi.draw_roi()
+    COCOJSON(project= "loitering", width=frame.shape[1], height=frame.shape[0],
+             filename=filename, coordinate= roiCoordinate,
+             imageId=1, categoryId=1)
     
     the_queue = queue.Queue(maxsize=2)
     

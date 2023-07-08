@@ -17,23 +17,28 @@ class Loitering:
             midLeg = self.xyxy2bot(i)
             
             if is_point_inside_polygon(np.asarray(roiCoordinate), midLeg):
-                print("is inside")
                 if i[-1] not in self.storage and i[-1] not in self.deleteId:
                     newData = {
                         i[-1] : {
-                            "timeIn": datetime.now()
+                            "timeIn": datetime.now(),
+                            "frame threshold": 0
                         }
                     }
                     self.storage.update(newData)
                 if i[-1]not in self.deleteId:
                     timeDifference = timeNow - self.storage[i[-1]]['timeIn']
+                    self.storage[i[-1]]['frame threshold'] = 0
                     if timeDifference.total_seconds() >=5 :
                         self.deleteId.append(i[-1])
                         del self.storage[i[-1]]
                         returnCoordinate.append(i)
             else:
                 if i[-1] in self.storage:
-                    del self.storage[i[-1]]
+                    self.storage[i[-1]]["frame threshold"] += 1
+                    print(self.storage[i[-1]]["frame threshold"])
+                    if self.storage[i[-1]]["frame threshold"] >= 5:
+                        del self.storage[i[-1]]
+                        self.deleteId.remove(i-[-1])
                     
                     
         return timeNow, returnCoordinate
