@@ -4,13 +4,22 @@ from datetime import datetime
 import numpy as np
 
 class Loitering:
+    """
+        To find the loitering event
+    """
     def __init__(self):
         self.storage = {}
         self.deleteId = []
-        #TODO: give 3 frame threshold to say that he is outside the frame
-        #TODO: change deleteId, bcs if he go out and in again cannot count
         
     def check(self, roiCoordinate, personCoordinate):
+        """
+            Input: 
+                roiCoordinate: ROI's coordinate (list)
+                personCoordinate: person yolov7 coordinate (list)
+            Output:
+                timeNow: time object
+                returnCoordinate: the person's coordinate that have loitering event
+        """
         returnCoordinate = []
         timeNow = datetime.now()
         for i in personCoordinate:
@@ -44,6 +53,13 @@ class Loitering:
         return timeNow, returnCoordinate
     
     def xyxy2bot(self, coordinate):
+        """
+        Finding the middle bottem coordinate of the bounding box (middle of the legs)
+        Input: 
+            coordinate:  bounding box (list) [x1,y1,x2,y2,conf,id]
+        Ouput:
+            midLeg: x1, y1 (list)
+        """
         x1,_,x2,y2,_,_ = coordinate
         midLeg= [x1 + ((x2-x1)/2),y2]
         

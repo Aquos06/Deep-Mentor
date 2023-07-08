@@ -23,7 +23,8 @@ python3 main.py
 - [X] Change deleteId in Loitering class
 - [X] Output the json
 - [X] Give comments
-
+- [ ] add How to Use in the README.md
+- [ ] add yolov7 and tracking code sources
 ## File Tree :cactus:
 <pre>
 .

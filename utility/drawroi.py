@@ -2,6 +2,13 @@ import cv2
 import numpy as np
 
 class PolygonDrawer:
+    """
+    Class to draw ROI 
+    How to Use:
+        1. Left click to draw
+        2. Right click to complete the polygon's ROI
+        3. Enter to finish the ROI 
+    """
     def __init__(self, image):
         self.image = image
         self.drawing = False
@@ -37,7 +44,10 @@ class PolygonDrawer:
 
             key = cv2.waitKey(1) & 0xFF
             if key == 13:  # Press Esc key to exit
-                break
+                if not self.polygon_completed:
+                    print("Please complete the ROi using right click")
+                else:
+                    break
 
         cv2.destroyAllWindows()
         return self.points

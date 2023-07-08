@@ -1,7 +1,18 @@
 import json
 
 def COCOJSON(project, width, height,filename, coordinate, imageId, categoryId):
-    
+    """
+    Input:
+        project: project name (string),
+        width: image width (int),
+        height: image height (int),
+        filename: image filename (string),
+        coordinate: roi coordinate (array)
+        imageId: the image id (int),
+        categoryId: category id (int)
+    Ouput:
+        None
+    """
     coco_dict = {
         "info": {
             "description": project
@@ -37,14 +48,26 @@ def COCOJSON(project, width, height,filename, coordinate, imageId, categoryId):
         json.dump(coco_dict, f, indent = 2)
         
 def get_bounding_box(coordinate):
+    """
+    Input:
+        coordinate: polygon roi coordinate (list)
+    Output:
+        [xmin, ymin, xmax, ymax]: roi's bounding box
+    """
     x_values, y_values = zip(*coordinate)
     xmin = min(x_values)
     xmax = max(x_values)
     ymin = min(y_values)
     ymax = max(y_values)
-    return [xmin, ymin, xmax - xmin, ymax - ymin]
+    return [xmin, ymin, xmax, ymax]
 
 def get_area(coordinate):
+    """
+    Input: 
+        coordinate: polygon roi coordinate (list)
+    Output:
+        area: coordinate (float)
+    """
     if len(coordinate) < 3:
         return 0.0
 

@@ -15,7 +15,14 @@ import time
 from datetime import datetime
 
 class VideoCaptureThread(threading.Thread):
+    """
+        VideoCaptureThread: Video Decoder using thread for preventing delay
+    """
     def __init__(self, camera_id, frame_queue):
+        """
+            camera_id: video sources or rtsp
+            frame_queue: queue 
+        """
         threading.Thread.__init__(self)
         self.camera_ip = camera_id
         self.capture = cv2.VideoCapture(self.camera_ip)
@@ -73,16 +80,15 @@ def main():
     while True:
         frame = the_queue.get()
         
-        frame, personCoor = yolov7.predict(frame)
-        personCoor = OCTrack.tracking(np.asarray(personCoor), frame)
+        frame, personCoor = yolov7.predict(frame) #using yolov7 to do object detection
+        personCoor = OCTrack.tracking(np.asarray(personCoor), frame) #track the person coordinate
         
-        frame = drawRoi(frame, np.asarray(roiCoordinate))
+        frame = drawRoi(frame, np.asarray(roiCoordinate)) #drawring ROI
         
-        timeNow, loiteringCoordinate = loitering.check(roiCoordinate,personCoor)
+        timeNow, loiteringCoordinate = loitering.check(roiCoordinate,personCoor) #checking each person's coordinate for the loitering check
         
         if loiteringCoordinate:
             differnce = timeNow - time_start
-            #TODO: make the json output
             print(f"Trigger loitering at {differnce.total_seconds()} second")
         
         cv2.imshow("loitering video", frame)

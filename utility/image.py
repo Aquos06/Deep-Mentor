@@ -2,6 +2,14 @@ import cv2
 import numpy as np
 
 def drawRoi(image, coordinate):
+    """
+    Draw ROI in the video 
+        Input: 
+            Image: image (np.ndarray)
+            coordinate: Polygon ROI coordinate (list)
+        Output:
+            returnImage: image after ROI
+    """
     overlay = image.copy()
     
     cv2.fillPoly(overlay, [coordinate], (0,255,0))

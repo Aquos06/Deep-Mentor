@@ -57,6 +57,12 @@ class detect():
         return img
 #this
     def predict(self, img1):
+        """
+            input: img1 (np.ndarray)
+            output: 
+                img1 (np.ndarray)
+                np.asarray(self.person_coor) -> person coordinates
+        """
         img = self.letterbox(img1)
         img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3x416x416
         self.img = np.ascontiguousarray(img)
