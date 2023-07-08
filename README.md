@@ -20,9 +20,9 @@ python3 main.py
 
 ## To do :white_check_mark:
 - [X] Give 3 frame threshold
-- [ ] Change deleteId in Loitering class
-- [ ] Output the json
-- [ ] Give comments
+- [X] Change deleteId in Loitering class
+- [X] Output the json
+- [X] Give comments
 
 ## File Tree :cactus:
 <pre>
