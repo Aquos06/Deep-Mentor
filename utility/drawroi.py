@@ -44,7 +44,7 @@ class PolygonDrawer:
 
             key = cv2.waitKey(1) & 0xFF
             if key == 13:  # Press Esc key to exit
-                if not self.polygon_completed:
+                if not self.finished:
                     print("Please complete the ROi using right click")
                 else:
                     break

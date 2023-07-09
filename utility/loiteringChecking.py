@@ -44,11 +44,12 @@ class Loitering:
             else:
                 if i[-1] in self.storage:
                     self.storage[i[-1]]["frame threshold"] += 1
-                    print(self.storage[i[-1]]["frame threshold"])
                     if self.storage[i[-1]]["frame threshold"] >= 5:
                         del self.storage[i[-1]]
-                        self.deleteId.remove(i-[-1])
-                    
+                        try:
+                            self.deleteId.remove(i[-1])
+                        except:
+                            continue
                     
         return timeNow, returnCoordinate
     
