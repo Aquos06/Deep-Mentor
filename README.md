@@ -18,6 +18,19 @@ cd Deep-Mentor
 python3 main.py
 ```
 
+## How to Use
+1. Run the Program
+```Python
+python3 main.py
+```
+2. A window will pop up to draw the ROI
+    - Left Click to draw the ROI
+    - Right Click to complete the ROI
+    - Enter to proceed the ROI drawings
+
+    Draw ROI -> Right Click -> Enter
+3. A Video window will pop up and the loitering event monitoring is running
+
 ## To do :white_check_mark:
 - [X] Give 3 frame threshold
 - [X] Change deleteId in Loitering class
